@@ -49,4 +49,7 @@ public class ServiceClass {
         else
             return null;
     }
+    public void deleteGreeting(long id) {
+        repository.deleteById(id);
+    }
 }
