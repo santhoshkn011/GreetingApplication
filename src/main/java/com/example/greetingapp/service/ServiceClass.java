@@ -39,4 +39,14 @@ public class ServiceClass {
     public List<GreetEntity> findAllGreet(){
         return repository.findAll();
     }
+
+    public GreetEntity editGreeting(GreetEntity greeting, long id) {
+        GreetEntity existingGreet = repository.findById(id).orElse(null);
+        if (existingGreet != null) {
+            existingGreet.setMessage(greeting.getMessage());
+            return repository.save(existingGreet);
+        }
+        else
+            return null;
+    }
 }
