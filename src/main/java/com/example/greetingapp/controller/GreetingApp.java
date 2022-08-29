@@ -5,6 +5,7 @@ import com.example.greetingapp.service.ServiceClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -45,13 +46,20 @@ public class GreetingApp {
         return service.greetMessageWithUser(firstName, lastName);
     }
 
+    //add the data to the table
     @PostMapping("/post")
     public GreetEntity addGreeting(@RequestBody GreetEntity greetings) {
         service.saveMessage(greetings);
         return greetings;
     }
+    //search Data by id
     @GetMapping("/greetById/{id}")
     public Optional<GreetEntity> greetById(@PathVariable long id){
         return service.findById(id);
+    }
+//get all the data
+    @GetMapping("/allGreetings")
+    public List<GreetEntity> findAllGreetings() {
+        return service.findAllGreet();
     }
 }
