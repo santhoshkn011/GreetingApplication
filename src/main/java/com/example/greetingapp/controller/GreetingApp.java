@@ -1,6 +1,6 @@
 package com.example.greetingapp.controller;
 
-import com.example.greetingapp.model.Entity;
+import com.example.greetingapp.model.GreetEntity;
 import com.example.greetingapp.service.ServiceClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/greet")
 public class GreetingApp {
+    @Autowired
+    ServiceClass service;
 
     @RequestMapping(value = {"", "/", "/home"}, method = RequestMethod.GET)
     public String greet() {
@@ -28,8 +30,6 @@ public class GreetingApp {
     /*
     Extending GreetingController to use Services Layer to get Simple Greeting message
      */
-    @Autowired
-    ServiceClass service;
 
     @GetMapping("/service")
     public String serviceCall() {
@@ -41,5 +41,11 @@ public class GreetingApp {
     public String greetMessageWithUser(@RequestParam(value = "firstName", defaultValue = "") String firstName,
                                        @RequestParam(value = "lastName", defaultValue = "") String lastName) {
         return service.greetMessageWithUser(firstName, lastName);
+    }
+
+    @PostMapping("/post")
+    public GreetEntity addGreeting(@RequestBody GreetEntity greetings) {
+        service.saveMessage(greetings);
+        return greetings;
     }
 }
